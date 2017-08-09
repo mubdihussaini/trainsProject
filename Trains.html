@@ -1,0 +1,129 @@
+<html>
+<head>
+    <title>Trains</title>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css" type="text/css">
+
+<script>
+  var config = {
+    apiKey: "AIzaSyB0l2q81-IhzG8i68SkvDHKk0-UV6QCz7E",
+    authDomain: "something-unique-4b137.firebaseapp.com",
+    databaseURL: "https://something-unique-4b137.firebaseio.com",
+    projectId: "something-unique-4b137",
+    storageBucket: "something-unique-4b137.appspot.com",
+    messagingSenderId: "612601427318"
+  };
+  firebase.initializeApp(config);
+var database = firebase.database();
+</script>
+
+</head>
+<body>
+        <div>
+            <div class=jumbotron> <h1 >Awesome Train Scheduler</h1> <br> <h2>Get around and let us get you there.</h2> </div>
+            <div class="currentEmployees">
+                <table class="table">
+          <h1 class="curEmpHead"> Train Schedule </h1>
+                      <thead>
+                        <tr>
+                          <th>Train Name</th>
+                          <th>Destination</th>
+                          <th>1st Train Time</th>
+                          <th>Frequency </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                         <tr>
+                          <th scope="row"><span id=trainNameSpan></span> </th>
+                                              
+
+                           <tr>
+                           <th scope="row"><span id=destintionSpan></span></th>
+                          
+                           <tr>
+                           <th scope="row"><span id=timeSpan></span></th>
+
+                           <tr>
+                           <th scope="row"><span id=FrequencySpan></span></th>
+                           
+
+
+
+
+                        </tr>
+                          </tbody>
+                    </table>
+                </div>
+
+
+
+
+<div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-4 col-sm-offset-2">
+                  
+                </div>
+                <div class="col-sm-6">
+                  <h3 class=""><strong>Train Name:</strong>this <span id="trainNameSpan"></span></h3>
+                  <h3 class=""><strong>Destination:</strong> <span id="destintionSpan"></span></h3>
+                  <h3 class=""><strong>1st Train Time:</strong> <span id="timeSpan"></span></h3>
+                  <h3 class=""><strong>Frequency:</strong> <span id="FrequencySpan"></span></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+            <div class=addTrain><h1 class="addEmpHead">Add Train</h1>
+              <form id="frm1" action="/action_page.php">
+                  <div class="formSubmit" id="trainNameForm">Train Name: </div> <br><input type="text" name="trainName"><br>
+                  <div class="formSubmit" id="destinationForm" >Destination: </div><br><input type="text" name="destination"><br>
+                  <div class="formSubmit" id="firstTrainTimeForm">1st Train Time (Military):</div><br><input type="text" name="employeeStart"><br>
+                  <div class="formSubmit" id="frequencyForm">Frequency: </div><br><input type="text" name="frequency"><br>
+                  <input id='submitBtn' type="button"  value="Submit">
+                  //onclick="addTrain()" 
+                </form>
+            </div>
+                <div class=form></div>
+        </div>
+
+<script >
+
+$("#submitBtn").on("click", function() {
+  var name = $("#trainNameForm").val();
+  var destination = $("#destinationForm").val();
+  var firstTrainTime = $("#firstTrainTimeForm").val();
+  var frequency = $("#frequencyForm").val();
+
+      console.log(name)
+
+  database.ref().set({
+    trainName: name,
+    trainDestination: destination,
+    trainFirstTrainTime: firstTrainTime,
+    trainFrequency: frequency,
+  });
+ }); 
+  
+database.ref().on("value", function(snapshot){
+
+          console.log(snapshot.val());
+
+          $("#trainNameSpan").html(snapshot.val().trainName);
+         // $("#highest-price").html(snapshot.val().destination);
+        });
+
+ 
+
+</script>
+
+</body>
+</html>
